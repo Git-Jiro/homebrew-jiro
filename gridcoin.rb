@@ -40,7 +40,7 @@ class Gridcoin < Formula
     if build.with? 'gui'
       system "qmake", "USE_UPNP=-"
       system "make"
-      bin.install "gridcoinresearch.app"
+      prefix.install "gridcoinresearch.app"
     end
 
 
