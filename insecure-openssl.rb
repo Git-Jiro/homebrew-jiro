@@ -1,15 +1,9 @@
 class InsecureOpenssl < Formula
-  desc "OpenSSL SSL/TLS cryptography library"
+  desc "OpenSSL SSL/TLS cryptography library. This version is insecure because it supports SSL 2.0."
   homepage "https://openssl.org"
   url "https://www.openssl.org/source/openssl-1.0.2c.tar.gz"
   mirror "https://raw.githubusercontent.com/DomT4/LibreMirror/master/OpenSSL/openssl-1.0.2c.tar.gz"
   sha256 "0038ba37f35a6367c58f17a7a7f687953ef8ce4f9684bbdec63e62515ed36a83"
-
-  bottle do
-    sha256 "b8f497f8d75d04fbeba3adb93af9823f49f4441583f8e007ccac8ff0aa38d3ae" => :yosemite
-    sha256 "8ec459f70f91522226280af48d21fa35e612c0373234cdb1cb06fea3bc9f58fc" => :mavericks
-    sha256 "24c387f6aef2464f1003532de09e1fd17d66da900633719a51a6adca6c04d598" => :mountain_lion
-  end
 
   option :universal
   option "without-check", "Skip build-time tests (not recommended)"
