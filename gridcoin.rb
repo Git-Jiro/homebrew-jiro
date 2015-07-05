@@ -1,15 +1,7 @@
-# Documentation: https://github.com/Homebrew/homebrew/blob/master/share/doc/homebrew/Formula-Cookbook.md
-#                /opt/boxen/homebrew/Library/Contributions/example-formula.rb
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
-
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
-  homepage "gridcoin.us"
-  #url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :revision => '700c507'
-  #url "https://github.com/Git-Jiro/Gridcoin-Research.git", :using => :git, :revision => '92333', :branch => 'Fix-makefile.osx'
-  url "https://github.com/Git-Jiro/Gridcoin-Research.git", :using => :git, :revision => '457abd8' , :branch => 'create_brew_recipe'
-  #version "3.4.0.5"
-  #sha256 ""
+  homepage "http://gridcoin.us"
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => 'acd4347ce0ba60b5'
 
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
@@ -19,20 +11,20 @@ class Gridcoin < Formula
   depends_on 'insecure-openssl'
   depends_on 'miniupnpc'
   depends_on 'libzip'
-  depends_on 'pkg-config'
+  depends_on 'pkg-config' => :build
   depends_on 'qrencode'
   depends_on 'qt'
 
-  stable do
-    # patch gridcoinstake.pro
+  head do
+    # patch gridcoinstake.pro, makefile.osx
     patch :DATA
   end
 
   def install
 
     if build.with? 'cli'
-      system "chmod", "+x", "src/leveldb/build_detect_platform"
-      system "mkdir", "-p", "src/obj/zerocoin"
+      chmod 0755, "src/leveldb/build_detect_platform"
+      mkdir_p "src/obj/zerocoin"
       system "make", "-C", "src", "-f", "makefile.osx", "USE_UPNP=-"
       bin.install "src/gridcoinresearchd"
     end
@@ -71,6 +63,37 @@ index c8f93f7..cce0ec8 100644
  macx:CONFIG -= qaxcontainer
 +macx:CONFIG += link_pkgconfig
 +macx:PKGCONFIG += libzip
-
+ 
  # Set libraries and includes at end, to use platform-defined defaults if not overridden
- #  INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$CURL_INCLUDE_PATH $$LIBZIP_INCLUDE_PATH
+ INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$CURL_INCLUDE_PATH $$LIBZIP_INCLUDE_PATH
+diff --git a/src/makefile.osx b/src/makefile.osx
+index ac61a77..8afb2ba 100644
+--- a/src/makefile.osx
++++ b/src/makefile.osx
+@@ -43,6 +43,7 @@ LIBS += \
+  -lboost_thread-mt \
+  -lssl \
+  -lcrypto \
++ -lcurl \
+  -lz
+ endif
+ 
+@@ -59,7 +60,7 @@ endif
+ 
+ # ppc doesn't work because we don't support big-endian
+ CFLAGS += -Wall -Wextra -Wformat -Wno-ignored-qualifiers -Wformat-security -Wno-unused-parameter \
+-    $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
++    $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS) $(shell pkg-config --cflags --libs libzip)
+ 
+ OBJS= \
+     obj/alert.o \
+@@ -95,7 +96,8 @@ OBJS= \
+     obj/scrypt.o \
+     obj/scrypt-x86.o \
+     obj/scrypt-x86_64.o \
+-    obj/cpid.o 
++    obj/cpid.o \
++    obj/upgrader.o 
+ 
+ ifndef USE_UPNP
+ 	override USE_UPNP = -
