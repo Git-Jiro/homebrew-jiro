@@ -13,7 +13,7 @@ class Gridcoin < Formula
   depends_on 'libzip'
   depends_on 'pkg-config' => :build
   depends_on 'qrencode'
-  depends_on 'qt'
+  depends_on 'nossl-qt'
 
   head do
     # patch gridcoinstake.pro, makefile.osx
