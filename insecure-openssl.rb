@@ -1,10 +1,11 @@
 class InsecureOpenssl < Formula
   desc "OpenSSL SSL/TLS cryptography library. This version is insecure because it supports SSL 2.0."
-  homepage "https://openssl.org"
-  homepage "https://openssl.org"
+  homepage "https://openssl.org/"
   url "https://www.openssl.org/source/openssl-1.0.2d.tar.gz"
+  mirror "https://dl.bintray.com/homebrew/mirror/openssl-1.0.2d.tar.gz"
+  mirror "https://www.mirrorservice.org/sites/ftp.openssl.org/source/openssl-1.0.2d.tar.gz"
   sha256 "671c36487785628a703374c652ad2cebea45fa920ae5681515df25d9f2c9a8c8"
-  
+
   option :universal
   option "without-check", "Skip build-time tests (not recommended)"
 
@@ -16,7 +17,7 @@ class InsecureOpenssl < Formula
   def arch_args
     {
       :x86_64 => %w[darwin64-x86_64-cc enable-ec_nistp_64_gcc_128],
-      :i386   => %w[darwin-i386-cc],
+      :i386   => %w[darwin-i386-cc]
     }
   end
 
@@ -100,8 +101,22 @@ class InsecureOpenssl < Formula
       /System/Library/Keychains/SystemRootCertificates.keychain
     ]
 
+    certs_list = `security find-certificate -a -p #{keychains.join(" ")}`
+    certs = certs_list.scan(
+      /-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----/m
+    )
+
+    valid_certs = certs.select do |cert|
+      IO.popen("openssl x509 -inform pem -checkend 0 -noout", "w") do |openssl_io|
+        openssl_io.write(cert)
+        openssl_io.close_write
+      end
+
+      $?.success?
+    end
+
     openssldir.mkpath
-    (openssldir/"cert.pem").atomic_write `security find-certificate -a -p #{keychains.join(" ")}`
+    (openssldir/"cert.pem").atomic_write(valid_certs.join("\n"))
   end
 
   def caveats; <<-EOS.undent
@@ -121,8 +136,8 @@ class InsecureOpenssl < Formula
 
     # Check OpenSSL itself functions as expected.
     (testpath/"testfile.txt").write("This is a test file")
-    expected_checksum = "91b7b0b1e27bfbf7bc646946f35fa972c47c2d32"
-    system "#{bin}/openssl", "dgst", "-sha1", "-out", "checksum.txt", "testfile.txt"
+    expected_checksum = "e2d0fe1585a63ec6009c8016ff8dda8b17719a637405a4e23c0ff81339148249"
+    system "#{bin}/openssl", "dgst", "-sha256", "-out", "checksum.txt", "testfile.txt"
     open("checksum.txt") do |f|
       checksum = f.read(100).split("=").last.strip
       assert_equal checksum, expected_checksum
