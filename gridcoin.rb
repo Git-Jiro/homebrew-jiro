@@ -1,7 +1,7 @@
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
   homepage "http://gridcoin.us"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => 'e0b1fc62a6ff9460'
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => '5adefc47f10a9ef0'
 
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
