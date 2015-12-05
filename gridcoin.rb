@@ -1,7 +1,7 @@
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
   homepage "http://gridcoin.us"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => '0cb98863acc7e3ac'
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => '1b53cbac43e083'
 
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
@@ -16,7 +16,7 @@ class Gridcoin < Formula
   depends_on 'nossl-qt'
 
   head do
-    # patch gridcoinstake.pro, makefile.osx
+    # patch gridcoinresearch.pro
     patch :DATA
   end
 
@@ -53,11 +53,11 @@ class Gridcoin < Formula
 end
 
 __END__
-diff --git a/gridcoinstake.pro b/gridcoinstake.pro
-index c8f93f7..cce0ec8 100644
---- a/gridcoinstake.pro
-+++ b/gridcoinstake.pro
-@@ -418,6 +418,8 @@ macx:QMAKE_LFLAGS_THREAD += -pthread
+diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
+index 2e32a31..aeeb803 100644
+--- a/gridcoinresearch.pro
++++ b/gridcoinresearch.pro
+@@ -421,6 +421,8 @@ macx:QMAKE_LFLAGS_THREAD += -pthread
  macx:QMAKE_CXXFLAGS_THREAD += -pthread
  macx:QT -= qaxcontainer axserver widgets
  macx:CONFIG -= qaxcontainer
@@ -66,34 +66,3 @@ index c8f93f7..cce0ec8 100644
  
  # Set libraries and includes at end, to use platform-defined defaults if not overridden
  INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$CURL_INCLUDE_PATH $$LIBZIP_INCLUDE_PATH
-diff --git a/src/makefile.osx b/src/makefile.osx
-index ac61a77..8afb2ba 100644
---- a/src/makefile.osx
-+++ b/src/makefile.osx
-@@ -43,6 +43,7 @@ LIBS += \
-  -lboost_thread-mt \
-  -lssl \
-  -lcrypto \
-+ -lcurl \
-  -lz
- endif
- 
-@@ -59,7 +60,7 @@ endif
- 
- # ppc doesn't work because we don't support big-endian
- CFLAGS += -Wall -Wextra -Wformat -Wno-ignored-qualifiers -Wformat-security -Wno-unused-parameter \
--    $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS)
-+    $(DEBUGFLAGS) $(DEFS) $(INCLUDEPATHS) $(shell pkg-config --cflags --libs libzip)
- 
- OBJS= \
-     obj/alert.o \
-@@ -95,7 +96,8 @@ OBJS= \
-     obj/scrypt.o \
-     obj/scrypt-x86.o \
-     obj/scrypt-x86_64.o \
--    obj/cpid.o 
-+    obj/cpid.o \
-+    obj/upgrader.o 
- 
- ifndef USE_UPNP
- 	override USE_UPNP = -
