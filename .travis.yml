@@ -2,8 +2,10 @@ language: objective-c
 before_install:
   - brew update
 install:
-  - mkdir -p $(brew --repo)/Library/Taps
-  - ln -s $PWD $(brew --repo)/Library/Taps/git-jiro
+  - echo $PWD
+  - ls $PWD
+  - mkdir -p $(brew --repo)/Library/Taps/git-jiro
+  - ln -s $PWD $(brew --repo)/Library/Taps/git-jiro/homebrew-jiro
   - brew tap --repair
 
 script:
