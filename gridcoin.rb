@@ -1,7 +1,7 @@
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
   homepage "http://gridcoin.us"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => 'ae4cd1153877'
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => 'cea4b9610655f'
 
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
@@ -14,11 +14,6 @@ class Gridcoin < Formula
   depends_on 'pkg-config' => :build
   depends_on 'qrencode'
   depends_on 'nossl-qt'
-
-  head do
-    # patch gridcoinresearch.pro
-    patch :DATA
-  end
 
   def install
 
@@ -35,7 +30,6 @@ class Gridcoin < Formula
       prefix.install "gridcoinresearch.app"
     end
 
-
   end
 
   test do
@@ -51,18 +45,3 @@ class Gridcoin < Formula
     system "false"
   end
 end
-
-__END__
-diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
-index 2e32a31..aeeb803 100644
---- a/gridcoinresearch.pro
-+++ b/gridcoinresearch.pro
-@@ -421,6 +421,8 @@ macx:QMAKE_LFLAGS_THREAD += -pthread
- macx:QMAKE_CXXFLAGS_THREAD += -pthread
- macx:QT -= qaxcontainer axserver widgets
- macx:CONFIG -= qaxcontainer
-+macx:CONFIG += link_pkgconfig
-+macx:PKGCONFIG += libzip
- 
- # Set libraries and includes at end, to use platform-defined defaults if not overridden
- INCLUDEPATH += $$BOOST_INCLUDE_PATH $$BDB_INCLUDE_PATH $$OPENSSL_INCLUDE_PATH $$QRENCODE_INCLUDE_PATH $$CURL_INCLUDE_PATH $$LIBZIP_INCLUDE_PATH
