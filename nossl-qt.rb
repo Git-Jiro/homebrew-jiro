@@ -9,12 +9,6 @@ class NosslQt < Formula
     sha256 "e2882295097e47fe089f8ac741a95fef47e0a73a3f3cdf21b56990638f626ea0"
   end
 
-  bottle do
-    sha256 "48e2e4d7f4659409c74e6acb9b59fdf9ab5d8e4b7f9b438a73e3d0ca03635e93" => :el_capitan
-    sha256 "8e041b0a48c8a0785022c8a77e8c40efeb9d57cd701b635cc0a7ce46692c0c5f" => :yosemite
-    sha256 "fe687f9a9b657d33b7c11ad4ccd7208deddd8e96d2104df2df98de13b0c5d5d7" => :mavericks
-  end
-
   # Backport of Qt5 commit to fix the fatal build error on OS X El Capitan.
   # http://code.qt.io/cgit/qt/qtbase.git/commit/?id=b06304e164ba47351fa292662c1e6383c081b5ca
   if MacOS.version >= :el_capitan
