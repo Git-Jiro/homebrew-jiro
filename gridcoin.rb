@@ -8,12 +8,12 @@ class Gridcoin < Formula
 
   depends_on 'boost'
   depends_on 'berkeley-db4'
-  depends_on 'insecure-openssl'
+  depends_on 'openssl'
   depends_on 'miniupnpc'
   depends_on 'libzip'
   depends_on 'pkg-config' => :build
   depends_on 'qrencode'
-  depends_on 'nossl-qt'
+  depends_on 'qt'
 
   def install
 
