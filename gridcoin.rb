@@ -1,7 +1,7 @@
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
   homepage "http://gridcoin.us"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => '41add47c84'
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :revision => '6422a1b74e7c8'
 
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
@@ -13,7 +13,7 @@ class Gridcoin < Formula
   depends_on 'libzip'
   depends_on 'pkg-config' => :build
   depends_on 'qrencode'
-  depends_on 'qt'
+  depends_on 'cartr/qt4/qt'
 
   def install
 
