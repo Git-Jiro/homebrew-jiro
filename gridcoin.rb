@@ -1,6 +1,7 @@
 class Gridcoin < Formula
   desc "GridCoin OS X client (GUI and CLI)"
   homepage "http://gridcoin.us"
+  
   url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.8.6.tar.gz"
   sha256 "d798ea60f87d4daf78c154dde650f0cb08cc28cc34fa8ee876c2e37948efb393"
   
