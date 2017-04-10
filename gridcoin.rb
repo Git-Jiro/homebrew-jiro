@@ -7,7 +7,7 @@ class Gridcoin < Formula
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
 
   devel do
-    url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "development"
+    url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
     version "3.5.8.8b-dev"
   end
 
