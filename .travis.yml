@@ -9,4 +9,4 @@ install:
   - brew tap --repair
 
 script:
-  - brew install gridcoin --with-cli
+  - brew install gridcoin
