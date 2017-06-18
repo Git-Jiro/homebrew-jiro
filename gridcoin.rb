@@ -1,14 +1,15 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.8.8b.tar.gz"
-  version "3.5.8.8b"
-  sha256 "601190f4438f8be762bfeea1dfd50d5fad4cd916c2c5bc92e24ae31b417bdcd6"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.9.0a.tar.gz"
+  version "3.5.9.0a"
+  sha256 "26985bef60aaffa21bbf0faa669b1a9701d89c688eca4226698ccc9bc8ef7f75"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
 
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.5.8.8b-dev"
+    version "3.5.9.0a-dev"
+    depends_on "berkeley-db"
   end
 
   option "without-upnp", "Do not compile with UPNP support"
@@ -17,12 +18,14 @@ class Gridcoin < Formula
 
   depends_on "boost"
   depends_on "berkeley-db@4"
+  depends_on "leveldb"
   depends_on "openssl"
   depends_on "miniupnpc"
   depends_on "libzip"
   depends_on "pkg-config" => :build
   depends_on "qrencode"
-  depends_on "Git-Jiro/jiro/qt"
+  # depends_on "qt"
+  depends_on "Git-Jiro/jiro/qt4gridcoin"
 
   def install
     if build.with? "upnp"
