@@ -25,7 +25,6 @@ class Gridcoin < Formula
   depends_on "pkg-config" => :build
   depends_on "qrencode"
   depends_on "qt"
-  #depends_on "Git-Jiro/jiro/qt4gridcoin"
 
   def install
     if build.with? "upnp"
