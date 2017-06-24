@@ -24,8 +24,8 @@ class Gridcoin < Formula
   depends_on "libzip"
   depends_on "pkg-config" => :build
   depends_on "qrencode"
-  # depends_on "qt"
-  depends_on "Git-Jiro/jiro/qt4gridcoin"
+  depends_on "qt"
+  #depends_on "Git-Jiro/jiro/qt4gridcoin"
 
   def install
     if build.with? "upnp"
@@ -42,7 +42,18 @@ class Gridcoin < Formula
     end
 
     if build.with? "gui"
-      system "qmake", "USE_UPNP=#{upnp_build_var}"
+      args = %W[
+        BOOST_INCLUDE_PATH=#{Formula["boost"].include}
+        BOOST_LIB_PATH=#{Formula["boost"].lib}
+        OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
+        OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
+        BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
+        BDB_LIB_PATH=#{Formula["berkeley-db@4"].lib}
+        MINIUPNPC_INCLUDE_PATH=#{Formula["miniupnpc"].include}
+        MINIUPNPC_LIB_PATH=#{Formula["miniupnpc"].lib}
+      ]
+
+      system "qmake", "USE_UPNP=#{upnp_build_var}", *args
       system "make"
       prefix.install "gridcoinresearch.app"
     end
