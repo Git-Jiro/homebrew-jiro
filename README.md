@@ -7,6 +7,6 @@ If you have **not installed XCode** during installation of Homebrew, please **do
 Otherwise you will not be able to use any of these formulae.
 
 After the app is installed, you may also want to symlink it to your applications folder. 
-ln -s /usr/local/Cellar/gridcoin/3.5.9.0a/gridcoinresearch.app gridcoinresearch.app
+brew linkapps gridcoin
 
 Have fun!
