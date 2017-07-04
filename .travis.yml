@@ -8,7 +8,7 @@ install:
 - ln -s $PWD $(brew --repo)/Library/Taps/git-jiro/homebrew-jiro
 - brew tap --repair
 script:
-- brew install gridcoin
+- travis_wait brew install gridcoin
 before_deploy:
   - cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt/*/bin/macdeployqt gridcoinresearch.app -verbose=2 -dmg
 deploy:
