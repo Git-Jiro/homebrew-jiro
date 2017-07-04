@@ -10,7 +10,7 @@ install:
 script:
 - brew install gridcoin
 before_deploy:
-- cd `brew --prefix`/Cellar/gridcoin/* && macdeployqt gridcoinresearch.app -verbose=2 -dmg
+  - cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt/*/bin/macdeployqt gridcoinresearch.app -verbose=2 -dmg
 deploy:
   skip_cleanup: true
   provider: releases
