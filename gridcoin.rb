@@ -6,6 +6,8 @@ class Gridcoin < Formula
   sha256 "98f575156ac209eaeee73cf6f5c5f0d9ba00b2f771cc5abdce635f84582c91af"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
 
+  patch :DATA
+
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
     version "3.5.9.5-dev"
@@ -70,3 +72,20 @@ class Gridcoin < Formula
     system "false"
   end
 end
+
+__END__
+diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
+index e2826ba..1796de5 100755
+--- a/src/rpcblockchain.cpp
++++ b/src/rpcblockchain.cpp
+@@ -18,6 +18,10 @@
+ #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
+ #include <fstream>
+
++#ifndef BYTE
++typedef unsigned char BYTE;
++#endif
++
+ using namespace json_spirit;
+ using namespace std;
+ extern std::string YesNo(bool bin);
