@@ -3,7 +3,7 @@ class Gridcoin < Formula
   homepage "https://gridcoin.us/"
   url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.9.6.tar.gz"
   version "3.5.9.6"
-  sha256 "3555ba534dbb4cc0a278ab31e08505113670bb03"
+  sha256 "03663c5376b16ec896c79c3e9a8646ae6d361c5e5078dbda54d8c5d98fe804a1"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
 
   patch :DATA
