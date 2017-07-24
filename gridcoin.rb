@@ -1,16 +1,16 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.9.5.tar.gz"
-  version "3.5.9.5"
-  sha256 "98f575156ac209eaeee73cf6f5c5f0d9ba00b2f771cc5abdce635f84582c91af"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.5.9.6.tar.gz"
+  version "3.5.9.6"
+  sha256 "3555ba534dbb4cc0a278ab31e08505113670bb03"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
 
   patch :DATA
 
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.5.9.5-dev"
+    version "3.5.9.6-dev"
   end
 
   option "without-upnp", "Do not compile with UPNP support"
