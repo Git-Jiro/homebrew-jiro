@@ -19,3 +19,4 @@ deploy:
   file: gridcoinresearch.dmg
   on:
     repo: Git-Jiro/homebrew-jiro
+    tags: true
