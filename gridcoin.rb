@@ -4,9 +4,17 @@ class Gridcoin < Formula
   url "https://github.com/gridcoin/Gridcoin-Research/archive/3.6.1.0.tar.gz"
   version "3.6.1.0"
   sha256 "1686f9e2fa97321c39819d5e54656d262d5cb28a3ff4a65bf55aeca06fa8d3e3"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "master"
+  head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   patch :DATA
+
+  def caveats
+    s = ""
+    s += "--HEAD uses Gridcoin's development branch.\n"
+    s += "--devel uses Gridcoin's staging branch.\n"
+    s += "Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy\n"
+    s
+  end
 
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
