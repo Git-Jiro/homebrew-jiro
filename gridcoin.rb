@@ -97,3 +97,38 @@ index e2826ba..1796de5 100755
  using namespace json_spirit;
  using namespace std;
  extern std::string YesNo(bool bin);
+diff --git a/src/rpcrawtransaction.cpp b/src/rpcrawtransaction.cpp
+index c530a8e9..150e832a 100644
+--- a/src/rpcrawtransaction.cpp
++++ b/src/rpcrawtransaction.cpp
+@@ -75,7 +75,7 @@ void GetTxStakeBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
+ 
+         res["xbbNeuralHash"]=bb.NeuralHash;
+         res["xbbCurrentNeuralHash"]=bb.CurrentNeuralHash;
+-        res["xbbNeuralContractSize"]=bb.superblock.length();
++        res["xbbNeuralContractSize"]=(int)bb.superblock.length();
+     }
+     else
+     {
+@@ -103,7 +103,7 @@ void GetTxNormalBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
+         * unknown / text
+     */
+ 
+-    res["bhLenght"]=msg.length();
++    res["bhLenght"]=(int)msg.length();
+ 
+     std::string sMessageType = ExtractXML(msg,"<MT>","</MT>");
+     std::string sTrxMessage = ExtractXML(msg,"<MESSAGE>","</MESSAGE>");
+diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
+index c9349625..67d79de7 100644
+--- a/src/rpcwallet.cpp
++++ b/src/rpcwallet.cpp
+@@ -1062,7 +1062,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
+             obj.push_back(Pair("account",       strAccount));
+             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
+             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
+-            obj.push_back(Pair("tx_count", (*it).second.sContracts.size()));
++            obj.push_back(Pair("tx_count", (int)(*it).second.sContracts.size()));
+ 
+             // Add support for contract or message information appended to the TX itself
+             Object oTX;
