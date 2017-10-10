@@ -3,7 +3,7 @@ class Gridcoin < Formula
   homepage "https://gridcoin.us/"
   url "https://github.com/gridcoin/Gridcoin-Research/archive/3.6.3.0.tar.gz"
   version "3.6.3.0"
-  sha256 "git remote add acey https://github.com/acey1/Gridcoin-Research.git && git fetch --all"
+  sha256 "2e58af1fed38aa909359090819ce3490ff5c81b2"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   patch :DATA
