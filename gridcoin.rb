@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.6.2.0.tar.gz"
-  version "3.6.2.0"
-  sha256 "95aadfb3af292a9824c5146c74bf292d85fba987756b895638fac6b9e02e65fc"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.6.3.0.tar.gz"
+  version "3.6.3.0"
+  sha256 "git remote add acey https://github.com/acey1/Gridcoin-Research.git && git fetch --all"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   patch :DATA
@@ -18,7 +18,7 @@ class Gridcoin < Formula
 
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.6.2.0-dev"
+    version "3.6.3.0-dev"
   end
 
   option "without-upnp", "Do not compile with UPNP support"
