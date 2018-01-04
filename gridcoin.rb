@@ -25,7 +25,7 @@ class Gridcoin < Formula
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
-  depends_on "boost"
+  depends_on "boost@1.60"
   depends_on "berkeley-db@4"
   depends_on "leveldb"
   depends_on "openssl"
@@ -51,8 +51,8 @@ class Gridcoin < Formula
 
     if build.with? "gui"
       args = %W[
-        BOOST_INCLUDE_PATH=#{Formula["boost"].include}
-        BOOST_LIB_PATH=#{Formula["boost"].lib}
+        BOOST_INCLUDE_PATH=#{Formula["boost@1.60"].include}
+        BOOST_LIB_PATH=#{Formula["boost@1.60"].lib}
         OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
         OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
         BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
@@ -82,6 +82,19 @@ class Gridcoin < Formula
 end
 
 __END__
+diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
+index c53e783e..bdc430fa 100755
+--- a/gridcoinresearch.pro
++++ b/gridcoinresearch.pro
+@@ -21,6 +21,8 @@
+     QT += charts
+ }
+
++QT += charts
++
+ # for boost 1.37, add -mt to the boost libraries
+ # use: qmake BOOST_LIB_SUFFIX=-mt
+ # for boost thread win32 with _win32 sufix
 diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
 index e2826ba..1796de5 100755
 --- a/src/rpcblockchain.cpp
