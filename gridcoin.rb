@@ -6,8 +6,6 @@ class Gridcoin < Formula
   sha256 "5268d8f58cc909b3d94e976614aa5c8886871e591a6bf2fa386e853bcf052b90"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
-  patch :DATA
-
   def caveats
     s = ""
     s += "--HEAD uses Gridcoin's development branch.\n"
@@ -16,9 +14,120 @@ class Gridcoin < Formula
     s
   end
 
+  stable do
+    patch <<-EOS.undent
+      diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
+      index c53e783e..bdc430fa 100755
+      --- a/gridcoinresearch.pro
+      +++ b/gridcoinresearch.pro
+      @@ -21,6 +21,8 @@
+           QT += charts
+       }
+      
+      +QT += charts
+      +
+       # for boost 1.37, add -mt to the boost libraries
+       # use: qmake BOOST_LIB_SUFFIX=-mt
+       # for boost thread win32 with _win32 sufix
+      diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
+      index e2826ba..1796de5 100755
+      --- a/src/rpcblockchain.cpp
+      +++ b/src/rpcblockchain.cpp
+      @@ -18,6 +18,10 @@
+       #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
+       #include <fstream>
+      
+      +#ifndef BYTE
+      +typedef unsigned char BYTE;
+      +#endif
+      +
+       using namespace json_spirit;
+       using namespace std;
+       extern std::string YesNo(bool bin);
+      diff --git a/src/rpcrawtransaction.cpp b/src/rpcrawtransaction.cpp
+      index c530a8e9..150e832a 100644
+      --- a/src/rpcrawtransaction.cpp
+      +++ b/src/rpcrawtransaction.cpp
+      @@ -75,7 +75,7 @@ void GetTxStakeBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
+       
+               res["xbbNeuralHash"]=bb.NeuralHash;
+               res["xbbCurrentNeuralHash"]=bb.CurrentNeuralHash;
+      -        res["xbbNeuralContractSize"]=bb.superblock.length();
+      +        res["xbbNeuralContractSize"]=(int)bb.superblock.length();
+           }
+           else
+           {
+      @@ -103,7 +103,7 @@ void GetTxNormalBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
+               * unknown / text
+           */
+       
+      -    res["bhLenght"]=msg.length();
+      +    res["bhLenght"]=(int)msg.length();
+       
+           std::string sMessageType = ExtractXML(msg,"<MT>","</MT>");
+           std::string sTrxMessage = ExtractXML(msg,"<MESSAGE>","</MESSAGE>");
+      diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
+      index c9349625..67d79de7 100644
+      --- a/src/rpcwallet.cpp
+      +++ b/src/rpcwallet.cpp
+      @@ -1062,7 +1062,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
+                   obj.push_back(Pair("account",       strAccount));
+                   obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
+                   obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
+      -            obj.push_back(Pair("tx_count", (*it).second.sContracts.size()));
+      +            obj.push_back(Pair("tx_count", (int)(*it).second.sContracts.size()));
+       
+                   // Add support for contract or message information appended to the TX itself
+                   Object oTX;
+    EOS
+  end
+
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
     version "3.6.3.0-dev"
+    patch <<-EOS.undent
+      diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
+      index c53e783e..bdc430fa 100755
+      --- a/gridcoinresearch.pro
+      +++ b/gridcoinresearch.pro
+      @@ -21,6 +21,8 @@
+           QT += charts
+       }
+      
+      +QT += charts
+      +
+       # for boost 1.37, add -mt to the boost libraries
+       # use: qmake BOOST_LIB_SUFFIX=-mt
+       # for boost thread win32 with _win32 sufix
+      diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
+      index e2826ba..1796de5 100755
+      --- a/src/rpcblockchain.cpp
+      +++ b/src/rpcblockchain.cpp
+      @@ -18,6 +18,10 @@
+       #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
+       #include <fstream>
+      
+      +#ifndef BYTE
+      +typedef unsigned char BYTE;
+      +#endif
+      +
+       using namespace json_spirit;
+       using namespace std;
+       extern std::string YesNo(bool bin);
+      diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
+      index c9349625..67d79de7 100644
+      --- a/src/rpcwallet.cpp
+      +++ b/src/rpcwallet.cpp
+      @@ -1062,7 +1062,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
+                   obj.push_back(Pair("account",       strAccount));
+                   obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
+                   obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
+      -            obj.push_back(Pair("tx_count", (*it).second.sContracts.size()));
+      +            obj.push_back(Pair("tx_count", (int)(*it).second.sContracts.size()));
+       
+                   // Add support for contract or message information appended to the TX itself
+                   Object oTX;
+      EOS
   end
 
   option "without-upnp", "Do not compile with UPNP support"
@@ -80,68 +189,3 @@ class Gridcoin < Formula
     system "false"
   end
 end
-
-__END__
-diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
-index c53e783e..bdc430fa 100755
---- a/gridcoinresearch.pro
-+++ b/gridcoinresearch.pro
-@@ -21,6 +21,8 @@
-     QT += charts
- }
-
-+QT += charts
-+
- # for boost 1.37, add -mt to the boost libraries
- # use: qmake BOOST_LIB_SUFFIX=-mt
- # for boost thread win32 with _win32 sufix
-diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
-index e2826ba..1796de5 100755
---- a/src/rpcblockchain.cpp
-+++ b/src/rpcblockchain.cpp
-@@ -18,6 +18,10 @@
- #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
- #include <fstream>
-
-+#ifndef BYTE
-+typedef unsigned char BYTE;
-+#endif
-+
- using namespace json_spirit;
- using namespace std;
- extern std::string YesNo(bool bin);
-diff --git a/src/rpcrawtransaction.cpp b/src/rpcrawtransaction.cpp
-index c530a8e9..150e832a 100644
---- a/src/rpcrawtransaction.cpp
-+++ b/src/rpcrawtransaction.cpp
-@@ -75,7 +75,7 @@ void GetTxStakeBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
- 
-         res["xbbNeuralHash"]=bb.NeuralHash;
-         res["xbbCurrentNeuralHash"]=bb.CurrentNeuralHash;
--        res["xbbNeuralContractSize"]=bb.superblock.length();
-+        res["xbbNeuralContractSize"]=(int)bb.superblock.length();
-     }
-     else
-     {
-@@ -103,7 +103,7 @@ void GetTxNormalBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
-         * unknown / text
-     */
- 
--    res["bhLenght"]=msg.length();
-+    res["bhLenght"]=(int)msg.length();
- 
-     std::string sMessageType = ExtractXML(msg,"<MT>","</MT>");
-     std::string sTrxMessage = ExtractXML(msg,"<MESSAGE>","</MESSAGE>");
-diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
-index c9349625..67d79de7 100644
---- a/src/rpcwallet.cpp
-+++ b/src/rpcwallet.cpp
-@@ -1062,7 +1062,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
-             obj.push_back(Pair("account",       strAccount));
-             obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
-             obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
--            obj.push_back(Pair("tx_count", (*it).second.sContracts.size()));
-+            obj.push_back(Pair("tx_count", (int)(*it).second.sContracts.size()));
- 
-             // Add support for contract or message information appended to the TX itself
-             Object oTX;
