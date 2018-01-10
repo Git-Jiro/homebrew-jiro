@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.6.3.0.tar.gz"
-  version "3.6.3.0"
-  sha256 "5268d8f58cc909b3d94e976614aa5c8886871e591a6bf2fa386e853bcf052b90"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.0.0.tar.gz"
+  version "3.7.0.0"
+  sha256 "675717ee54ed942757c61a6dbc25259dcd3b216dceec75c21b3c71ae1c10591b"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
@@ -44,28 +44,6 @@ class Gridcoin < Formula
        using namespace json_spirit;
        using namespace std;
        extern std::string YesNo(bool bin);
-      diff --git a/src/rpcrawtransaction.cpp b/src/rpcrawtransaction.cpp
-      index c530a8e9..150e832a 100644
-      --- a/src/rpcrawtransaction.cpp
-      +++ b/src/rpcrawtransaction.cpp
-      @@ -75,7 +75,7 @@ void GetTxStakeBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
-       
-               res["xbbNeuralHash"]=bb.NeuralHash;
-               res["xbbCurrentNeuralHash"]=bb.CurrentNeuralHash;
-      -        res["xbbNeuralContractSize"]=bb.superblock.length();
-      +        res["xbbNeuralContractSize"]=(int)bb.superblock.length();
-           }
-           else
-           {
-      @@ -103,7 +103,7 @@ void GetTxNormalBoincHashInfo(json_spirit::mObject& res, const CMerkleTx& mtx)
-               * unknown / text
-           */
-       
-      -    res["bhLenght"]=msg.length();
-      +    res["bhLenght"]=(int)msg.length();
-       
-           std::string sMessageType = ExtractXML(msg,"<MT>","</MT>");
-           std::string sTrxMessage = ExtractXML(msg,"<MESSAGE>","</MESSAGE>");
       diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
       index c9349625..67d79de7 100644
       --- a/src/rpcwallet.cpp
