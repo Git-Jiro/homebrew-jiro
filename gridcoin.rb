@@ -146,9 +146,11 @@ class Gridcoin < Formula
         BDB_LIB_PATH=#{Formula["berkeley-db@4"].lib}
         MINIUPNPC_INCLUDE_PATH=#{Formula["miniupnpc"].include}
         MINIUPNPC_LIB_PATH=#{Formula["miniupnpc"].lib}
+        QRENCODE_INCLUDE_PATH=#{Formula["qrencode"].include}
+        QRENCODE_LIB_PATH=#{Formula["qrencode"].lib}
       ]
 
-      system "qmake", "USE_UPNP=#{upnp_build_var}", *args
+      system "qmake", "USE_QRCODE=1", "NO_UPGRADE=1", "USE_UPNP=#{upnp_build_var}", *args
       system "make"
       prefix.install "gridcoinresearch.app"
     end
