@@ -15,7 +15,7 @@ class Gridcoin < Formula
   end
 
   stable do
-    patch <<-EOS
+    patch <<EOS.undent
       diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
       index c53e783e..bdc430fa 100755
       --- a/gridcoinresearch.pro
@@ -63,7 +63,7 @@ class Gridcoin < Formula
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
     version "3.7.4.0-dev"
-    patch <<-EOS
+    patch <<EOS.undent
       diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
       index c53e783e..bdc430fa 100755
       --- a/gridcoinresearch.pro
