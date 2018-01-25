@@ -33,17 +33,16 @@ class Gridcoin < Formula
       index e2826ba..1796de5 100755
       --- a/src/rpcblockchain.cpp
       +++ b/src/rpcblockchain.cpp
-      @@ -18,6 +18,10 @@
-       #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
+      @@ -22,6 +22,9 @@
        #include <fstream>
+       #include <algorithm>
       
       +#ifndef BYTE
       +typedef unsigned char BYTE;
       +#endif
-      +
+      
+       bool TallyResearchAverages_v9();
        using namespace json_spirit;
-       using namespace std;
-       extern std::string YesNo(bool bin);
       diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
       index c9349625..67d79de7 100644
       --- a/src/rpcwallet.cpp
@@ -81,17 +80,16 @@ class Gridcoin < Formula
       index e2826ba..1796de5 100755
       --- a/src/rpcblockchain.cpp
       +++ b/src/rpcblockchain.cpp
-      @@ -18,6 +18,10 @@
-       #include <boost/algorithm/string/case_conv.hpp> // for to_lower()
+      @@ -22,6 +22,9 @@
        #include <fstream>
+       #include <algorithm>
       
       +#ifndef BYTE
       +typedef unsigned char BYTE;
       +#endif
-      +
+      
+       bool TallyResearchAverages_v9();
        using namespace json_spirit;
-       using namespace std;
-       extern std::string YesNo(bool bin);
       diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
       index c9349625..67d79de7 100644
       --- a/src/rpcwallet.cpp
