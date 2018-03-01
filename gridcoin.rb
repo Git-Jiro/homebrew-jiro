@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.7.0.tar.gz"
-  version "3.7.7.0"
-  sha256 "81e7b5721f0dc528cb153358c76850491945d56f525064d934571d8567581676"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.8.0.tar.gz"
+  version "3.7.8.0"
+  sha256 "65ab69b94216d997528a003574725620d57af952761126cde6df49edcf5ae7a7"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
