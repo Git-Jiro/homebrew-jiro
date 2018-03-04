@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.8.0.tar.gz"
-  version "3.7.8.0"
-  sha256 "65ab69b94216d997528a003574725620d57af952761126cde6df49edcf5ae7a7"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.9.0.tar.gz"
+  version "3.7.9.0"
+  sha256 "b4c0a8d97211db1f871f89f464ef25d22e9cb099f792f0fb488a0571f5aa5d81"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
@@ -61,7 +61,7 @@ class Gridcoin < Formula
 
   devel do
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.7.7.0-dev"
+    version "3.7.9.0-dev"
     patch <<-EOS.undent
       diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
       index c53e783e..bdc430fa 100755
