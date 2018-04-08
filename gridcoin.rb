@@ -137,6 +137,7 @@ class Gridcoin < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
+  depends_on "librsvg" => :build
 
   def install
     if build.with? "upnp"
@@ -173,8 +174,8 @@ class Gridcoin < Formula
       else
         system "./autogen.sh"
         system "./configure"
-        system "make"
-        bin.install "src/qt/gridcoinresearch"
+        system "make appbundle"
+        prefix.install "gridcoinresearch.app"
       end
 
     end
