@@ -90,19 +90,34 @@ class Gridcoin < Formula
       
        bool TallyResearchAverages_v9();
        using namespace json_spirit;
-      diff --git a/src/rpcwallet.cpp b/src/rpcwallet.cpp
-      index c9349625..67d79de7 100644
-      --- a/src/rpcwallet.cpp
-      +++ b/src/rpcwallet.cpp
-      @@ -1062,7 +1062,7 @@ Value ListReceived(const Array& params, bool fByAccounts)
-                   obj.push_back(Pair("account",       strAccount));
-                   obj.push_back(Pair("amount",        ValueFromAmount(nAmount)));
-                   obj.push_back(Pair("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf)));
-      -            obj.push_back(Pair("tx_count", (*it).second.sContracts.size()));
-      +            obj.push_back(Pair("tx_count", (int)(*it).second.sContracts.size()));
-       
-                   // Add support for contract or message information appended to the TX itself
-                   Object oTX;
+      diff --git a/configure.ac b/configure.ac
+      index eb96af9c..8b692612 100644
+      --- a/configure.ac
+      +++ b/configure.ac
+      @@ -57,14 +57,8 @@ AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory], [nodefault])
+       dnl Check if -latomic is required for <std::atomic>
+       CHECK_ATOMIC
+      
+      -dnl Unless the user specified OBJCXX, force it to be the same as CXX. This ensures
+      -dnl that we get the same -std flags for both.
+      -m4_ifdef([AC_PROG_OBJCXX],[
+      -if test "x${OBJCXX+set}" = "x"; then
+      -  OBJCXX="${CXX}"
+      -fi
+       AC_PROG_OBJCXX
+      -])
+      +OBJCXX="${CXX}"
+      
+       dnl Libtool init checks.
+       LT_INIT([pic-only])
+      @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
+       echo "  CPPFLAGS      = $CPPFLAGS"
+       echo "  CXX           = $CXX"
+       echo "  CXXFLAGS      = $CXXFLAGS"
+      +echo "  OBJCXX        = $OBJCXX"
+      +echo "  OBJCXXFLAGS   = $OBJCXXFLAGS"
+       echo "  LDFLAGS       = $LDFLAGS"
+       echo
       EOS
   end
 
@@ -119,6 +134,9 @@ class Gridcoin < Formula
   depends_on "pkg-config" => :build
   depends_on "qrencode"
   depends_on "qt"
+  depends_on "autoconf" => :build
+  depends_on "automake" => :build
+  depends_on "libtool" => :build
 
   def install
     if build.with? "upnp"
@@ -148,9 +166,17 @@ class Gridcoin < Formula
         QRENCODE_LIB_PATH=#{Formula["qrencode"].lib}
       ]
 
-      system "qmake", "USE_QRCODE=1", "NO_UPGRADE=1", "USE_UPNP=#{upnp_build_var}", *args
-      system "make"
-      prefix.install "gridcoinresearch.app"
+      if build.stable?
+        system "qmake", "USE_QRCODE=1", "NO_UPGRADE=1", "USE_UPNP=#{upnp_build_var}", *args
+        system "make"
+        prefix.install "gridcoinresearch.app"
+      else
+        system "./autogen.sh"
+        system "./configure"
+        system "make"
+        bin.install "src/qt/gridcoinresearch"
+      end
+
     end
   end
 
