@@ -140,7 +140,7 @@ class Gridcoin < Formula
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
-  depends_on "boost@1.60"
+  depends_on "boost"
   depends_on "berkeley-db@4"
   depends_on "leveldb"
   depends_on "openssl"
