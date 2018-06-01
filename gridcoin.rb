@@ -63,6 +63,15 @@ class Gridcoin < Formula
       
        dnl Libtool init checks.
        LT_INIT([pic-only])
+      @@ -783,7 +776,7 @@ fi
+       
+       if test x$use_boost = xyes; then
+       
+      -BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB"
+      +BOOST_LIBS="$BOOST_LDFLAGS $BOOST_FILESYSTEM_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB -lboost_system-mt"
+      
+      
+       dnl If boost (prior to 1.57) was built without c++11, it emulated scoped enums
       @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
        echo "  CPPFLAGS      = $CPPFLAGS"
        echo "  CXX           = $CXX"
