@@ -3,7 +3,7 @@ class Gridcoin < Formula
   homepage "https://gridcoin.us/"
   url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.13.0.tar.gz"
   version "3.7.13.0"
-  sha256 "9c821ca73a88e42b56b3ccca28576b5e7ea71a33"
+  sha256 "57eb54efb506801075ecfb62f89a85ad97e434e53db249fce08d92d79bc7cd16"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
