@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/3.7.16.0.tar.gz"
-  version "3.7.16.0"
-  sha256 "4309ccd75809dd034083c8f40983ce89b2436237afe388bab3d10af4e0936dd6"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/4.0.0.0.tar.gz"
+  version "4.0.0.0"
+  sha256 "de13491af81a0239d97343e51d377bbf9f27770379b026a1c70671001179274e"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
@@ -149,7 +149,7 @@ class Gridcoin < Formula
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
-  depends_on "boost@1.60"
+  depends_on "boost"
   depends_on "berkeley-db@4"
   depends_on "leveldb"
   depends_on "openssl"
@@ -179,8 +179,8 @@ class Gridcoin < Formula
 
     if build.with? "gui"
       args = %W[
-        BOOST_INCLUDE_PATH=#{Formula["boost@1.60"].include}
-        BOOST_LIB_PATH=#{Formula["boost@1.60"].lib}
+        BOOST_INCLUDE_PATH=#{Formula["boost"].include}
+        BOOST_LIB_PATH=#{Formula["boost"].lib}
         OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
         OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
         BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
