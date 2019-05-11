@@ -1,9 +1,9 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/4.0.1.0.tar.gz"
-  version "4.0.1.0"
-  sha256 "e9f34ef6d7b79839802ba1cfe7c6e74e5021e546dd163f714e2fb48d19299223"
+  url "https://github.com/gridcoin/Gridcoin-Research/archive/4.0.3.0.tar.gz"
+  version "4.0.3.0"
+  sha256 "4da89e4d3dcdd38ed24a3402b73383e8412eaf59207428ceaa6918764e4f2f85"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
@@ -63,15 +63,13 @@ class Gridcoin < Formula
       
        dnl Libtool init checks.
        LT_INIT([pic-only])
-      @@ -783,7 +776,7 @@ fi
-       
+      @@ -829,5 +823,5 @@
        if test x$use_boost = xyes; then
        
-      -BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB"
-      +BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB -lboost_system-mt"
-      
-      
-       dnl If boost (prior to 1.57) was built without c++11, it emulated scoped enums
+      -BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_ZLIB_LIB $BOOST_IOSTREAMS_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB $BOOST_ZLIB_LIB"
+      +BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_ZLIB_LIB $BOOST_IOSTREAMS_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB $BOOST_ZLIB_LIB -lboost_system-mt"
+       
+       
       @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
        echo "  CPPFLAGS      = $CPPFLAGS"
        echo "  CXX           = $CXX"
