@@ -146,7 +146,7 @@ class Gridcoin < Formula
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
-  depends_on "boost"
+  depends_on "boost@1.60"
   depends_on "berkeley-db@4"
   depends_on "leveldb"
   depends_on "openssl"
@@ -176,8 +176,8 @@ class Gridcoin < Formula
 
     if build.with? "gui"
       args = %W[
-        BOOST_INCLUDE_PATH=#{Formula["boost"].include}
-        BOOST_LIB_PATH=#{Formula["boost"].lib}
+        BOOST_INCLUDE_PATH=#{Formula["boost@1.60"].include}
+        BOOST_LIB_PATH=#{Formula["boost@1.60"].lib}
         OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
         OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
         BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
@@ -189,7 +189,7 @@ class Gridcoin < Formula
       ]
 
       system "./autogen.sh"
-      system "./configure"
+      system "./configure --with-boost=#{Formula["boost@1.60"].lib}/.."
       system "make appbundle"
       prefix.install "gridcoinresearch.app"
     end
