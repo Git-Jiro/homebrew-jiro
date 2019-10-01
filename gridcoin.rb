@@ -15,53 +15,10 @@ class Gridcoin < Formula
 
   stable do
     patch <<-EOS
-      diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
-      index c53e783e..bdc430fa 100755
-      --- a/gridcoinresearch.pro
-      +++ b/gridcoinresearch.pro
-      @@ -21,6 +21,8 @@
-           QT += charts
-       }
-      
-      +QT += charts
-      +
-       # for boost 1.37, add -mt to the boost libraries
-       # use: qmake BOOST_LIB_SUFFIX=-mt
-       # for boost thread win32 with _win32 sufix
-      diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
-      index e2826ba..1796de5 100755
-      --- a/src/rpcblockchain.cpp
-      +++ b/src/rpcblockchain.cpp
-      @@ -22,6 +22,9 @@
-       #include <fstream>
-       #include <algorithm>
-      
-      +#ifndef BYTE
-      +typedef unsigned char BYTE;
-      +#endif
-      
-       bool TallyResearchAverages_v9();
-       using namespace json_spirit;
       diff --git a/configure.ac b/configure.ac
       index eb96af9c..8b692612 100644
       --- a/configure.ac
       +++ b/configure.ac
-      @@ -57,14 +57,8 @@ AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory], [nodefault])
-       dnl Check if -latomic is required for <std::atomic>
-       CHECK_ATOMIC
-      
-      -dnl Unless the user specified OBJCXX, force it to be the same as CXX. This ensures
-      -dnl that we get the same -std flags for both.
-      -m4_ifdef([AC_PROG_OBJCXX],[
-      -if test "x${OBJCXX+set}" = "x"; then
-      -  OBJCXX="${CXX}"
-      -fi
-       AC_PROG_OBJCXX
-      -])
-      +OBJCXX="${CXX}"
-      
-       dnl Libtool init checks.
-       LT_INIT([pic-only])
       @@ -829,5 +823,5 @@
        if test x$use_boost = xyes; then
        
@@ -84,33 +41,6 @@ class Gridcoin < Formula
     url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
     version "3.7.15.0-dev"
     patch <<-EOS
-      diff --git a/gridcoinresearch.pro b/gridcoinresearch.pro
-      index c53e783e..bdc430fa 100755
-      --- a/gridcoinresearch.pro
-      +++ b/gridcoinresearch.pro
-      @@ -21,6 +21,8 @@
-           QT += charts
-       }
-      
-      +QT += charts
-      +
-       # for boost 1.37, add -mt to the boost libraries
-       # use: qmake BOOST_LIB_SUFFIX=-mt
-       # for boost thread win32 with _win32 sufix
-      diff --git a/src/rpcblockchain.cpp b/src/rpcblockchain.cpp
-      index e2826ba..1796de5 100755
-      --- a/src/rpcblockchain.cpp
-      +++ b/src/rpcblockchain.cpp
-      @@ -22,6 +22,9 @@
-       #include <fstream>
-       #include <algorithm>
-      
-      +#ifndef BYTE
-      +typedef unsigned char BYTE;
-      +#endif
-      
-       bool TallyResearchAverages_v9();
-       using namespace json_spirit;
       diff --git a/configure.ac b/configure.ac
       index eb96af9c..8b692612 100644
       --- a/configure.ac
@@ -189,7 +119,7 @@ class Gridcoin < Formula
       ]
 
       system "./autogen.sh"
-      system "./configure --with-boost=#{Formula["boost@1.60"].lib}/.."
+      system "unset OBJCXX ; ./configure --with-boost=#{Formula["boost@1.60"].lib}/.."
       system "make appbundle"
       prefix.install "gridcoinresearch.app"
     end
