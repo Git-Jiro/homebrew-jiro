@@ -34,6 +34,17 @@ class Gridcoin < Formula
       +echo "  OBJCXXFLAGS   = $OBJCXXFLAGS"
        echo "  LDFLAGS       = $LDFLAGS"
        echo
+      diff --git a/src/qt/trafficgraphwidget.cpp b/src/qt/trafficgraphwidget.cpp
+      index b1a698f1..6a2e6852 100644
+      --- a/src/qt/trafficgraphwidget.cpp
+      +++ b/src/qt/trafficgraphwidget.cpp
+      @@ -2,6 +2,7 @@
+       #include "clientmodel.h"
+       
+       #include <QPainter>
+      +#include <QPainterPath>
+       #include <QColor>
+       #include <QTimer>
     EOS
   end
 
