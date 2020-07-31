@@ -8,7 +8,6 @@ class Gridcoin < Formula
   def caveats
     s = ""
     s += "--HEAD uses Gridcoin's development branch.\n"
-    s += "--devel uses Gridcoin's staging branch.\n"
     s += "Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy\n"
     s
   end
@@ -46,41 +45,6 @@ class Gridcoin < Formula
        #include <QColor>
        #include <QTimer>
     EOS
-  end
-
-  devel do
-    url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.7.15.0-dev"
-    patch <<-EOS
-      diff --git a/configure.ac b/configure.ac
-      index eb96af9c..8b692612 100644
-      --- a/configure.ac
-      +++ b/configure.ac
-      @@ -57,14 +57,8 @@ AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory], [nodefault])
-       dnl Check if -latomic is required for <std::atomic>
-       CHECK_ATOMIC
-      
-      -dnl Unless the user specified OBJCXX, force it to be the same as CXX. This ensures
-      -dnl that we get the same -std flags for both.
-      -m4_ifdef([AC_PROG_OBJCXX],[
-      -if test "x${OBJCXX+set}" = "x"; then
-      -  OBJCXX="${CXX}"
-      -fi
-       AC_PROG_OBJCXX
-      -])
-      +OBJCXX="${CXX}"
-      
-       dnl Libtool init checks.
-       LT_INIT([pic-only])
-      @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
-       echo "  CPPFLAGS      = $CPPFLAGS"
-       echo "  CXX           = $CXX"
-       echo "  CXXFLAGS      = $CXXFLAGS"
-      +echo "  OBJCXX        = $OBJCXX"
-      +echo "  OBJCXXFLAGS   = $OBJCXXFLAGS"
-       echo "  LDFLAGS       = $LDFLAGS"
-       echo
-      EOS
   end
 
   option "without-upnp", "Do not compile with UPNP support"
