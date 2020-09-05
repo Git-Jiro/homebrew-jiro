@@ -1,8 +1,8 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin/Gridcoin-Research/archive/4.0.6.0.tar.gz"
-  sha256 "b2908f907227cae735a42dd5aadad26d6999077e6997ee42d9cb0e50738bec43"
+  url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.0.0.0.tar.gz"
+  sha256 "f46b2207d4524d705a89e039c95a52b7beed69a7b15e17b93bad19e957863018"
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
@@ -33,17 +33,6 @@ class Gridcoin < Formula
       +echo "  OBJCXXFLAGS   = $OBJCXXFLAGS"
        echo "  LDFLAGS       = $LDFLAGS"
        echo
-      diff --git a/src/qt/trafficgraphwidget.cpp b/src/qt/trafficgraphwidget.cpp
-      index b1a698f1..6a2e6852 100644
-      --- a/src/qt/trafficgraphwidget.cpp
-      +++ b/src/qt/trafficgraphwidget.cpp
-      @@ -2,6 +2,7 @@
-       #include "clientmodel.h"
-       
-       #include <QPainter>
-      +#include <QPainterPath>
-       #include <QColor>
-       #include <QTimer>
     EOS
   end
 
@@ -94,7 +83,7 @@ class Gridcoin < Formula
       ]
 
       system "./autogen.sh"
-      system "unset OBJCXX ; ./configure"
+      system "unset OBJCXX ; ./configure --disable-asm"
       system "make appbundle"
       prefix.install "gridcoinresearch.app"
     end
