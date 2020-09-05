@@ -1,8 +1,7 @@
 os: osx
+language: objective-c
 osx_image: xcode11.3
 install:
-- echo $PWD
-- ls $PWD
 - mkdir -p $(brew --repo)/Library/Taps/git-jiro
 - ln -s $PWD $(brew --repo)/Library/Taps/git-jiro/homebrew-jiro
 - brew tap --repair
@@ -11,9 +10,9 @@ script:
 before_deploy:
   - cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt/*/bin/macdeployqt gridcoinresearch.app -verbose=2 -dmg
 deploy:
-  skip_cleanup: true
+  cleanup: false
   provider: releases
-  api_key:
+  token:
     secure: 0RGnHYkPRzxY2ldO0NuQ9D8mP0nUb3rz1/JojREJv1U/NFY9BsXjS3RgJqd06J4bT6C1ykYiSZiQu4ewXkXfYFwrknzQGt3B6ULS85rQ5xQj7wrBNFpgSav/rRYi8nJukVgNuagldjA2g0Xx5Ft7Up6+k7Pn/QbMS8wH32jGP4+AC7erKXVB7W77MA8qRSqJl8I2KSEKDqj8X/ImGCCnM+FLRVibRmO3SG8R5+8L6dQhdS29LGdE3Bx8SrhyrPALsoEOpjs6MesRAREw0VvaIt3gp2sRxMi57Mj32C0yXhsbGyY+SpoO4DI0W9LAVjGhbssKqTaeUkGnO/pqqh0BPmmjp2iTYNAChSaH5TXI4fp3B2L2Tp6bS5OE9uHd5pya8vwV/RI7h/QcWNijOKQ041LHzF6mF0lbVqmXxYqVVSF559aGsBOgxnVt6lVMaERuCGBPXSNYFq6YIkdLl+SInxIzcMhuYiq7gYcUHCGJrMe/3F88c3rPf+hHcIAyq1uBZJvixXQPVd0cNDajgWimNweorQTEFumWou7Njyy3EFeC9Os/Mz06BJUqZx/UbG66MMHB8Eh6MJlCUpemxnnjH99zvstgD3B7gCdiwhDffgxKmzlx7/scFFXgxhhonmFS5ZCntSuL7qz2RWRvgfSVATRz9qzt/pr72ePHupeTWKc=
   file: gridcoinresearch.dmg
   on:
