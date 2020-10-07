@@ -20,11 +20,11 @@ class Gridcoin < Formula
       +++ b/configure.ac
       @@ -829,5 +823,5 @@
        if test x$use_boost = xyes; then
-       
+
       -BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_ZLIB_LIB $BOOST_IOSTREAMS_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB $BOOST_ZLIB_LIB"
       +BOOST_LIBS="$BOOST_LDFLAGS $BOOST_SYSTEM_LIB $BOOST_FILESYSTEM_LIB $BOOST_ZLIB_LIB $BOOST_IOSTREAMS_LIB $BOOST_PROGRAM_OPTIONS_LIB $BOOST_THREAD_LIB $BOOST_CHRONO_LIB $BOOST_ZLIB_LIB -lboost_system-mt"
-       
-       
+
+
       @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
        echo "  CPPFLAGS      = $CPPFLAGS"
        echo "  CXX           = $CXX"
@@ -40,19 +40,19 @@ class Gridcoin < Formula
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
-  depends_on "boost"
-  depends_on "berkeley-db@4"
-  depends_on "leveldb"
-  depends_on "openssl"
-  depends_on "miniupnpc"
-  depends_on "libzip"
-  depends_on "pkg-config" => :build
-  depends_on "qrencode"
-  depends_on "qt"
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "libtool" => :build
   depends_on "librsvg" => :build
+  depends_on "libtool" => :build
+  depends_on "pkg-config" => :build
+  depends_on "berkeley-db@4"
+  depends_on "boost"
+  depends_on "leveldb"
+  depends_on "libzip"
+  depends_on "miniupnpc"
+  depends_on "openssl"
+  depends_on "qrencode"
+  depends_on "qt"
 
   def install
     if build.with? "upnp"
