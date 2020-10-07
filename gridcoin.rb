@@ -6,10 +6,10 @@ class Gridcoin < Formula
   head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
 
   def caveats
-    s = ""
-    s += "--HEAD uses Gridcoin's development branch.\n"
-    s += "Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy\n"
-    s
+    <<~EOS
+      --HEAD uses Gridcoin's development branch.
+      Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy
+    EOS
   end
 
   stable do
