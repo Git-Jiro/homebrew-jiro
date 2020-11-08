@@ -1,6 +1,7 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
+  license "MIT"
 
   stable do
     url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.1.0.0.tar.gz"
