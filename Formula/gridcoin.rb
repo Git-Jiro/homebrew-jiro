@@ -60,12 +60,7 @@ class Gridcoin < Formula
   depends_on "qt"
 
   def install
-    upnp_build_var
-    if build.with? "upnp"
-      upnp_build_var = "1"
-    else
-      upnp_build_var = "-"
-    end
+    upnp_build_var = build.with?("upnp") ? "1" : "-"
 
     if build.with? "cli"
       chmod 0755, "src/leveldb/build_detect_platform"
