@@ -1,18 +1,11 @@
 class Gridcoin < Formula
   desc "OS X client (GUI and CLI)"
   homepage "https://gridcoin.us/"
-  url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.1.0.0.tar.gz"
-  sha256 "a4c84664ca199de0a07c94b79030d13eafc7ee8ab9ef7a05a5de8f62fb82190b"
-  head "https://github.com/gridcoin/Gridcoin-Research.git", :branch => "development"
-
-  def caveats
-    <<~EOS
-      --HEAD uses Gridcoin's development branch.
-      Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy
-    EOS
-  end
 
   stable do
+    url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.1.0.0.tar.gz"
+    sha256 "a4c84664ca199de0a07c94b79030d13eafc7ee8ab9ef7a05a5de8f62fb82190b"
+
     patch <<-EOS
       diff --git a/configure.ac b/configure.ac
       index eb96af9c..8b692612 100644
@@ -36,6 +29,17 @@ class Gridcoin < Formula
     EOS
   end
 
+  head do
+    url "https://github.com/gridcoin/Gridcoin-Research.git", branch: "development"
+
+    def caveats
+      <<~EOS
+        --HEAD uses Gridcoin's development branch.
+        Please refer to https://github.com/gridcoin/Gridcoin-Research/blob/master/README.md for Gridcoin's branching strategy
+      EOS
+    end
+  end
+
   option "without-upnp", "Do not compile with UPNP support"
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
@@ -55,6 +59,7 @@ class Gridcoin < Formula
   depends_on "qt"
 
   def install
+    upnp_build_var
     if build.with? "upnp"
       upnp_build_var = "1"
     else
@@ -69,19 +74,6 @@ class Gridcoin < Formula
     end
 
     if build.with? "gui"
-      args = %W[
-        BOOST_INCLUDE_PATH=#{Formula["boost"].include}
-        BOOST_LIB_PATH=#{Formula["boost"].lib}
-        OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
-        OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
-        BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
-        BDB_LIB_PATH=#{Formula["berkeley-db@4"].lib}
-        MINIUPNPC_INCLUDE_PATH=#{Formula["miniupnpc"].include}
-        MINIUPNPC_LIB_PATH=#{Formula["miniupnpc"].lib}
-        QRENCODE_INCLUDE_PATH=#{Formula["qrencode"].include}
-        QRENCODE_LIB_PATH=#{Formula["qrencode"].lib}
-      ]
-
       system "./autogen.sh"
       system "unset OBJCXX ; ./configure --disable-asm"
       system "make appbundle"
