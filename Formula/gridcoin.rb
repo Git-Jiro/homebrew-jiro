@@ -56,15 +56,23 @@ class Gridcoin < Formula
   depends_on "libzip"
   depends_on "miniupnpc"
   depends_on "openssl"
-  depends_on "qrencode"
   depends_on "qt"
 
+  depends_on "qrencode" => :recommended
+
   def install
-    upnp_build_var = build.with?("upnp") ? "1" : "-"
+    config_args = %w[
+      --disable-asm
+    ]
+    config_args << "--without-qrencode" if build.without? "qrencode"
+
+    make_use_upnp = build.with?("upnp") ? "1" : "-"
+    make_use_qrcode = build.with?("qrencode") ? "1" : "0"
 
     system "./autogen.sh"
-    system "unset OBJCXX ; ./configure --disable-asm"
-    system "make", "USE_UPNP=#{upnp_build_var}"
+    ENV.delete "OBJCXX"
+    system "./configure", *config_args
+    system "make", "USE_UPNP=#{make_use_upnp}", "USE_QRCODE=#{make_use_qrcode}"
     system "make", "check"
 
     bin.install "src/gridcoinresearchd" if build.with? "cli"
