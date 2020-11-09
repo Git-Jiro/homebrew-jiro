@@ -65,6 +65,7 @@ class Gridcoin < Formula
     system "./autogen.sh"
     system "unset OBJCXX ; ./configure --disable-asm"
     system "make", "USE_UPNP=#{upnp_build_var}"
+    system "make", "check"
 
     bin.install "src/gridcoinresearchd" if build.with? "cli"
 
