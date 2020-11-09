@@ -72,7 +72,7 @@ class Gridcoin < Formula
     system "./autogen.sh"
     ENV.delete "OBJCXX"
     system "./configure", *config_args
-    system "make", "USE_UPNP=#{make_use_upnp}", "USE_QRCODE=#{make_use_qrcode}"
+    system "make", "NO_UPGRADE=1", "USE_UPNP=#{make_use_upnp}", "USE_QRCODE=#{make_use_qrcode}"
     system "make", "check"
 
     bin.install "src/gridcoinresearchd" if build.with? "cli"
