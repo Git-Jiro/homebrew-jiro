@@ -62,17 +62,14 @@ class Gridcoin < Formula
   def install
     upnp_build_var = build.with?("upnp") ? "1" : "-"
 
-    if build.with? "cli"
-      chmod 0755, "src/leveldb/build_detect_platform"
-      mkdir_p "src/obj/zerocoin"
-      system "make", "-C", "src", "-f", "makefile.osx", "USE_UPNP=#{upnp_build_var}"
-      bin.install "src/gridcoinresearchd"
-    end
+    system "./autogen.sh"
+    system "unset OBJCXX ; ./configure --disable-asm"
+    system "make", "USE_UPNP=#{upnp_build_var}"
+
+    bin.install "src/gridcoinresearchd" if build.with? "cli"
 
     if build.with? "gui"
-      system "./autogen.sh"
-      system "unset OBJCXX ; ./configure --disable-asm"
-      system "make appbundle"
+      system "make", "appbundle"
       prefix.install "gridcoinresearch.app"
     end
   end
