@@ -1,10 +1,13 @@
 os: osx
 language: objective-c
 osx_image: xcode10.1
+before_install:
+- brew update
 install:
 - mkdir -p $(brew --repo)/Library/Taps/git-jiro
 - ln -s $PWD $(brew --repo)/Library/Taps/git-jiro/homebrew-jiro
 - brew tap --repair
+- brew install --only-dependencies gridcoin
 script:
 - travis_wait brew install gridcoin
 before_deploy:
