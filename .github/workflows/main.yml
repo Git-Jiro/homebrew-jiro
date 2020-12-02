@@ -38,7 +38,9 @@ jobs:
       - name: build gridcoin dmg
         run: |
           cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt/*/bin/macdeployqt gridcoinresearch.app -verbose=2 -dmg
-          cp `brew --prefix`/Cellar/gridcoin/gridcoinresearch.dmg $GITHUB_WORKSPACE/gridcoinresearch_bigsur.dmg
+          pwd
+          ls
+          cp gridcoinresearch.dmg $GITHUB_WORKSPACE/gridcoinresearch_bigsur.dmg
 
       - name: Create Release
         id: create_release
