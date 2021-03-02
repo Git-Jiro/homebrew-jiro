@@ -56,7 +56,7 @@ class Gridcoin < Formula
   depends_on "libzip"
   depends_on "miniupnpc"
   depends_on "openssl"
-  depends_on "qt"
+  depends_on "qt@5"
 
   depends_on "qrencode" => :recommended
 
