@@ -16,14 +16,14 @@ jobs:
     strategy:
       matrix:
         #os: [macos-10.13, macos-10.14, macos-10.15, macos-11.0]
-        os: [macos-10.13]
+        os: [macos-10.15]
         include:
-          - os: macos-10.13
-            dmg_name: gridcoinreseach_highsierra.dmg
+          #- os: macos-10.13
+          #  dmg_name: gridcoinreseach_highsierra.dmg
           #- os: macos-10.14
           #  dmg_name: gridcoinresearch_mojave.dmg
-          #- os: macos-10.15
-          #  dmg_name: gridcoinresearch_catalina.dmg
+          - os: macos-10.15
+            dmg_name: gridcoinresearch_catalina.dmg
           #- os: macos-11.00
           # dmg_name: gridcoinresearch_bigsur.dmg
 
