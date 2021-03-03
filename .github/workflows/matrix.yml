@@ -1,0 +1,78 @@
+
+name: Matrix Test
+
+on:
+  push:
+    tags:
+    - 'm*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    strategy:
+      matrix:
+        #os: [macos-10.13, macos-10.14, macos-10.15, macos-11.0]
+        os: [macos-10.13]
+        include:
+          - os: macos-10.13
+            dmg_name: gridcoinreseach_highsierra.dmg
+          #- os: macos-10.14
+          #  dmg_name: gridcoinresearch_mojave.dmg
+          #- os: macos-10.15
+          #  dmg_name: gridcoinresearch_catalina.dmg
+          #- os: macos-11.00
+          # dmg_name: gridcoinresearch_bigsur.dmg
+
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    env:
+      DMG_NAME: ${{ matrix.dmg_name }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: install-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: setup the Tap
+        run: |
+          mkdir -p $(brew --repo)/Library/Taps/git-jiro
+          ln -s $GITHUB_WORKSPACE $(brew --repo)/Library/Taps/git-jiro/homebrew-jiro
+          brew tap --repair
+          brew install --only-dependencies gridcoin
+
+      - name: install gridcoin
+        run: |
+          brew install gridcoin
+
+      - name: build gridcoin dmg
+        run: |
+          cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt@5/*/bin/macdeployqt gridcoinresearch.app -verbose=2 -dmg
+          cp gridcoinresearch.dmg $GITHUB_WORKSPACE/$DMG_NAME
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ${{ github.workspace }}/${{ matrix.dmg_name }}
+          asset_name: ${{ matrix.dmg_name }}
+          asset_content_type: application/zip
