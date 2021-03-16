@@ -33,7 +33,7 @@ jobs:
           
       - name: install gridcoin
         run: |
-          brew install gridcoin
+          brew install roboticmind/forkofjiro/gridcoin
 
       - name: build gridcoin dmg
         run: |
