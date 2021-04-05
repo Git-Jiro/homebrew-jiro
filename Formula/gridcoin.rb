@@ -4,8 +4,8 @@ class Gridcoin < Formula
   license "MIT"
 
   stable do
-    url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.3.0.0.tar.gz"
-    sha256 "18ec6a85d8569e30705668e3e45c1beccfccc0647afee28d9da13a7805c6305a"
+    url "https://github.com/gridcoin-community/Gridcoin-Research/archive/5.3.1.0.tar.gz"
+    sha256 "dc8aa87b2863a2d6e0aeebbd1df2719b1a5baa7feded1f5744b0fe1ad57abcad"
 
     patch <<-EOS
       diff --git a/configure.ac b/configure.ac
