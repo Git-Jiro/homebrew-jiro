@@ -79,7 +79,7 @@ class Gridcoin < Formula
 
     if build.with? "gui"
       system "make", "appbundle"
-      prefix.install "gridcoinresearch.app"
+      prefix.install "Gridcoin.app"
     end
   end
 
