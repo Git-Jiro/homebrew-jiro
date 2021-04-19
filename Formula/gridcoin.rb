@@ -62,12 +62,13 @@ class Gridcoin < Formula
 
   def install
     config_args = %w[
-      --disable-asm
     ]
     config_args << "--without-qrencode" if build.without? "qrencode"
 
     make_use_upnp = build.with?("upnp") ? "1" : "-"
     make_use_qrcode = build.with?("qrencode") ? "1" : "0"
+
+    system "cd src ; ../contrib/nomacro.pl"
 
     system "./autogen.sh"
     ENV.delete "OBJCXX"
