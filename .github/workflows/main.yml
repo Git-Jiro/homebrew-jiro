@@ -38,7 +38,7 @@ jobs:
       - name: build gridcoin dmg
         run: |
           cd `brew --prefix`/Cellar/gridcoin/* && `brew --prefix`/Cellar/qt@5/*/bin/macdeployqt Gridcoin.app -verbose=2 -dmg
-          cp Gridcoin.dmg $GITHUB_WORKSPACE/gridcoinresearch_bigsur.dmg
+          cp Gridcoin.dmg $GITHUB_WORKSPACE/gridcoinresearch_bigsur_or_mojave.dmg
 
       - name: Create Release
         id: create_release
@@ -57,6 +57,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ${{ github.workspace }}/gridcoinresearch_bigsur.dmg
-          asset_name: gridcoinresearch_bigsur.dmg
+          asset_path: ${{ github.workspace }}/gridcoinresearch_bigsur_or_mojave.dmg
+          asset_name: gridcoinresearch_bigsur_or_mojave.dmg
           asset_content_type: application/zip

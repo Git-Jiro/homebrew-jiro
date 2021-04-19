@@ -87,6 +87,6 @@ class Gridcoin < Formula
     system bin/"gridcoinresearchd", "-version" if build.with? "cli"
 
     # Currently help is the only flag which does not actually start the gui
-    system prefix/"gridcoinresearch.app/Contents/MacOS/gridcoinresearch", "-?" if build.with? "gui"
+    system prefix/"Gridcoin.app/Contents/MacOS/gridcoinresearch", "-?" if build.with? "gui"
   end
 end
